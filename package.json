@@ -1,5 +1,5 @@
 {
-    "name": "backend_creater_backend_atentificador_hydrosense",
+    "name": "backend_creater_hydrosense",
     "version": "1.0.0",
     "description": "Backend para una aplicación web",
     "main": "app.js",
