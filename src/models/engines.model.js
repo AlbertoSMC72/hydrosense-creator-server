@@ -1,32 +1,33 @@
-import mongoose from 'mongoose';
+import zod from "zod";
 
-const engineSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    HP: { /* Caballos por minuto */
-        type: Number,
-        required: true
-    },
-    voltage: {
-        type: Number,
-        required: true
-    },
-    amperage: {
-        type: Number,
-        required: true
-    },
-    frecuency: {
-        type: Number,
-        required: true
-    },
-    RPM: { /* Revoluciones por minuto */
-        type: Number,
-        required: true
-    }
+const Engine = zod.object({
+    name: zod.string({
+        required_error: "Name is required",
+    }),
+    HP: zod.number({
+        required_error: "HP is required",
+    }),
+    amperge: zod.number({
+        required_error: "Amperge is required",
+    }),
+    voltage: zod.number({
+        required_error: "Voltage is required",
+    }),
+    frequency: zod.number({
+        required_error: "Frequency is required",
+    }),
+    RPM: zod.number({
+        required_error: "RPM is required",
+    }),
+    company_ref: zod.number({
+        required_error: "Company reference is required to create an engine",
+    }),
 });
 
-const Engine = mongoose.model('Engine', engineSchema);
+export function validateEngine(data) {
+    return Engine.parse(data);
+}
 
-export default Engine;
+export function validateEngineUpdate(data) {
+    return Engine.partial().parse(data);
+}

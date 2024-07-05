@@ -1,4 +1,4 @@
-import { postDataService } from "../services/datas.service";
+import { postDataService} from "../services/datas.service";
 
 export const postDataController = async (req, res) => {
     postDataService(req.body)

@@ -1,18 +1,13 @@
-import mongoose from "mongoose";
+import zod, { date } from "zod";
 
-const dataSchema = new mongoose.Schema({
-    date: {
-        type: Date,
-        required: true,
-    },
-    data: {
-        type: Array,
-        required: true,
-    },
-    device: {
-        type: Number,
-        required: true,
-    },
+const Data = zod.object({
+    date: zod.date({
+        required_error: "Date is required",
+    }),
+    data: zod.any({
+        required_error: "Data is required",
+    }),
+    engine_ref_data: zod.number({
+        required_error: "Engine reference is required to create a data",
+    }),
 });
-
-const Data = mongoose.model("Data", dataSchema);

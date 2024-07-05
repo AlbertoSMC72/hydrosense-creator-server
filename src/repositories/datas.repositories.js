@@ -1,10 +1,14 @@
-import Data from "../models/datas.model.js";
+import config from "../config/config.js";
 
-export const createData = async (req) => {
+export const createData = async (data) => {
+    config.startTransaction();
     try {
-        return await Data.create(req.body);
+        await config.execute("INSERT INTO data set ?", [data]);
+        config.commit();
+        return {status: 200};
     } catch (error) {
-        throw new Error(`Error creating data: ${error.message}`);
+        config.rollback();
+        throw error;
     }
 }
 

@@ -1,28 +1,23 @@
-import mongoose from "mongoose";
+import zod from "zod";
 
-const reportSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    description: {
-        type: String,
-        required: false,
-    },
-    date: {
-        type: Date,
-        required: true,
-    },
-    data: {
-        type: Array,
-        required: true,
-    },
-    device: {
-        type: Number,
-        required: true,
-    },
+const Report = zod.object({
+    tittle: zod.string({
+        required_error: "Tittle is required",
+    }),
+    description: zod.string({
+        required_error: "Description is required",
+    }),
+    date: zod.date({
+        required_error: "Date is required",
+    }),
+    data: zod.any({
+        required_error: "Data is required",
+    }),
+    engine_ref_rep: zod.number({
+        required_error: "Engine reference is required to create a report",
+    }),
 });
 
-const Report = mongoose.model("Report", reportSchema);
-
-export default Report;
+export function validateReport(data) {
+    return Report.parse(data);
+}
