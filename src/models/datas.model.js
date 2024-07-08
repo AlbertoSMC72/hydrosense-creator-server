@@ -11,3 +11,7 @@ const Data = zod.object({
         required_error: "Engine reference is required to create a data",
     }),
 });
+
+export function validateData(data) {
+    return Data.parse(data);
+}

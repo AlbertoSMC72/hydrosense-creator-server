@@ -1,4 +1,4 @@
-import { postReportService } from "../services/reports.service";
+import { postReportService } from "../services/reports.service.js";
 
 export const postReportController = async (req, res) => {
     postReportService(req)

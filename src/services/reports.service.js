@@ -1,4 +1,4 @@
-import { postReport } from "../repositories/reports.repositories";
+import { postReport } from "../repositories/reports.repositories.js";
 
 export const postReportService = async (req) => {
     try {

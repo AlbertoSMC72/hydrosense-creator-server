@@ -1,4 +1,4 @@
-import { postReportController } from "../controllers/reports.controller";
+import { postReportController } from "../controllers/reports.controller.js";
 import { Router } from "express";
 
 const reportRouter = Router();
