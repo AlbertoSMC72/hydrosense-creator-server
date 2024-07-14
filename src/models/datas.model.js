@@ -13,5 +13,5 @@ const Data = zod.object({
 });
 
 export function validateData(data) {
-    return Data.parse(data);
+    return Data.safeParse(data);
 }

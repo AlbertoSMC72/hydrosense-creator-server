@@ -19,5 +19,5 @@ const Report = zod.object({
 });
 
 export function validateReport(data) {
-    return Report.parse(data);
+    return Report.safeParse(data);
 }
