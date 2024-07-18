@@ -1,15 +1,10 @@
 import config from "../config/config.js";
 
 export const createData = async (data) => {
-    
-
-    config.startTransaction();
-    try {
-        await config.execute("INSERT INTO data set ?", [data]);
-        config.commit();
+        try {
+        await config.execute("INSERT INTO datas (`date`, `data`, `engine_ref_data`) VALUES (?, ?, ?)", [data.date , data.data, data.engine_ref_data]);
         return {status: 200};
     } catch (error) {
-        config.rollback();
         throw error;
     }
 }

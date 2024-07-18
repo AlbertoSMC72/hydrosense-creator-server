@@ -5,7 +5,7 @@ export const postDataService = async (req) => {
     try {
         //logica para el servidor en tiempo real
         const data = validateData(req.body);
-        if(data.success){
+        if(!data.success){
             const dataRes = await createData(req.body);
             return dataRes;
         }else {
