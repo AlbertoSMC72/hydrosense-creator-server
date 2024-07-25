@@ -6,23 +6,31 @@ export const postDataService = async (req) => {
     try {
         const data = validateData(req.body);
         if (!data.success) {
-            // Crear un cliente de Socket.IO y enviar infoToSend
-            const socket = io('http://44.199.91.75:8080');
+            // Crear un cliente de Socket.IO
+            const socket = io('http://localhost:8080'); // Asegúrate de usar http://
 
-            socket.on('connect', () => {
-                socket.emit('message', req.body);
-            });
+            // Promesa para manejar la conexión y el envío de mensajes
+            await new Promise((resolve, reject) => {
+                socket.on('connect', () => {
+                    // Enviar mensaje al servidor
+                    socket.emit('message', req.body);
+                });
 
-            socket.on('error', (err) => {
-                console.error('Socket.IO error:', err);
+                socket.on('message', (response) => {
+                    console.log('Respuesta del servidor:', response);
+                    socket.disconnect();
+                    resolve();
+                });
+
+                socket.on('error', (err) => {
+                    console.error('Socket.IO error:', err);
+                    socket.disconnect();
+                    reject(err);
+                });
             });
-            
-            // Desconectar el socket después de enviar los datos
-            socket.disconnect();
 
             // Lógica para enviar a la DB
             const dataRes = await createData(req.body);
-
             return dataRes;
         } else {
             throw new Error(data.error.message);
